@@ -18,7 +18,7 @@ Participants with above-threshold anxiety symptoms (NeuroQoL) are eligible to pa
 
 ## MindTrails-HD Pilot Study
 
-`Prelim Data for Jeremy 2-3-22_MindTrails-HD pilot` are preliminary long-format data from a RedCap survey for a pilot study of an adaptation of interpretation bias training (MindTrails for Huntington's Disease; MindTrails-HD) for anxious (NeuroQoL) patients with HD.
+`Prelim Data for Jeremy 2-3-22_MindTrails-HD pilot.csv` are preliminary long-format data from a RedCap survey for a pilot study of an adaptation of interpretation bias training (MindTrails for Huntington's Disease; MindTrails-HD) for anxious (NeuroQoL) patients with HD.
 
 # Scripts
 
