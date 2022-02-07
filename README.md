@@ -8,7 +8,7 @@ The present scripts conduct preliminary analyses for [Professor Jessie Gibson](h
 
 # Data
 
-The present scripts import preliminary datasets from two studies, for which recruitment is ongoing.
+The present scripts import deidentified preliminary datasets (stored privately on UVA Box) from two studies, for which recruitment is ongoing.
 
 ## MDIB Development Study
 
