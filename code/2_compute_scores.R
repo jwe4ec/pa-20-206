@@ -36,6 +36,24 @@ mdib_dat <- read.csv("./data/bot_cleaned/Prelim Data for Jeremy 2-3-22_MDIB.csv"
 mthd_dat <- read.csv("./data/raw/Prelim Data for Jeremy 2-3-22_MindTrails-HD pilot.csv")
 
 # ---------------------------------------------------------------------------- #
+# Remove blank rows ----
+# ---------------------------------------------------------------------------- #
+
+# For rows where "record_id" is NA, all columns are NA or "". Remove such rows
+# in "mdib_dat".
+
+sum(is.na(mdib_dat$record_id)) == 205
+
+sum(!(is.na(mdib_dat[is.na(mdib_dat$record_id), ]) |
+        mdib_dat[is.na(mdib_dat$record_id), ] == "")) == 0
+
+mdib_dat <- mdib_dat[!is.na(mdib_dat$record_id), ]
+
+# No "record_id"s are NA in "mthd_dat"
+
+sum(is.na(mthd_dat$record_id)) == 0
+
+# ---------------------------------------------------------------------------- #
 # Define scale items ----
 # ---------------------------------------------------------------------------- #
 
@@ -107,12 +125,13 @@ items <- list(mdib_neg = mdib_neg_items,
 # Recode "prefer not to answer" values ----
 # ---------------------------------------------------------------------------- #
 
-# Recode "prefer not to answer" (coded as 99) in "mdib_dat". "mthd_dat" does not
-# appear to contain any such values.
+# Recode "prefer not to answer" (coded as 99) in "mdib_dat"
 
 target_items <- c(mdib_neg_items, bbsiq_neg_items, neuroqol_anx_items)
 
 mdib_dat[, target_items][mdib_dat[, target_items] == 99] <- NA
+
+# "mthd_dat" does not appear to contain any such values
 
 summary(mthd_dat[, c(mdib_neg_items, neuroqol_anx_items)])
 
