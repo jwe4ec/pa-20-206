@@ -100,7 +100,7 @@ neuroqol_anx_tot_plot <-
            group = record_id, color = record_id, linetype = record_id)) +
   geom_smooth(method = "loess", se = FALSE) +
   geom_point(data = plot_df) +
-  labs(title = "Anxiety Symptoms Over Time for Tx Completers",
+  labs(title = "Figure 2. Anxiety Over Time for Tx Completers",
        x = "Assessment",
        y = "Total Score (NeuroQoL Anxiety)") +
   scale_linetype_manual(name = "Participant",
@@ -113,8 +113,10 @@ neuroqol_anx_tot_plot <-
                      limits = c(scale_min, scale_max)) +
   theme_classic() +
   theme(plot.title = element_text(hjust = 0.5),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10),
         legend.title = element_text(size = 12),
-        legend.text = element_text(size = 9),
+        legend.text = element_text(size = 10),
         legend.key.width = unit(2, "cm")) +
   theme(axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0))) +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0))) +
