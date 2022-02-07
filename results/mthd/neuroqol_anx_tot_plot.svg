@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='svglite' width='360.00pt' height='360.00pt' viewBox='0 0 360.00 360.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHwzNjAuMDB8MC4wMHwzNjAuMDA='>
+    <rect x='0.00' y='0.00' width='360.00' height='360.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHwzNjAuMDB8MC4wMHwzNjAuMDA=)'>
+<rect x='0.00' y='0.00' width='360.00' height='360.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
+</g>
+<defs>
+  <clipPath id='cpNDAuMzZ8MzU0LjUyfDIzLjE4fDMyMS4yOA=='>
+    <rect x='40.36' y='23.18' width='314.16' height='298.10' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpNDAuMzZ8MzU0LjUyfDIzLjE4fDMyMS4yOA==)'>
+<rect x='40.36' y='23.18' width='314.16' height='298.10' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<polyline points='70.76,223.04 222.78,256.92 324.12,248.45 ' style='stroke-width: 2.13; stroke: #1B9E77; stroke-dasharray: 19.92,8.54; stroke-linecap: butt;' />
+<polyline points='70.76,146.82 222.78,172.23 324.12,155.29 ' style='stroke-width: 2.13; stroke: #7570B3; stroke-linecap: butt;' />
+<circle cx='70.76' cy='223.04' r='1.95' style='stroke-width: 0.71; stroke: #1B9E77; fill: #1B9E77;' />
+<circle cx='222.78' cy='256.92' r='1.95' style='stroke-width: 0.71; stroke: #1B9E77; fill: #1B9E77;' />
+<circle cx='324.12' cy='248.45' r='1.95' style='stroke-width: 0.71; stroke: #1B9E77; fill: #1B9E77;' />
+<circle cx='70.76' cy='146.82' r='1.95' style='stroke-width: 0.71; stroke: #7570B3; fill: #7570B3;' />
+<circle cx='222.78' cy='172.23' r='1.95' style='stroke-width: 0.71; stroke: #7570B3; fill: #7570B3;' />
+<circle cx='324.12' cy='155.29' r='1.95' style='stroke-width: 0.71; stroke: #7570B3; fill: #7570B3;' />
+</g>
+<g clip-path='url(#cpMC4wMHwzNjAuMDB8MC4wMHwzNjAuMDA=)'>
+<polyline points='40.36,321.28 40.36,23.18 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<text x='35.43' y='310.88' text-anchor='end' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='4.90px' lengthAdjust='spacingAndGlyphs'>8</text>
+<text x='35.43' y='243.13' text-anchor='end' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='9.79px' lengthAdjust='spacingAndGlyphs'>16</text>
+<text x='35.43' y='175.38' text-anchor='end' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='9.79px' lengthAdjust='spacingAndGlyphs'>24</text>
+<text x='35.43' y='107.63' text-anchor='end' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='9.79px' lengthAdjust='spacingAndGlyphs'>32</text>
+<text x='35.43' y='39.88' text-anchor='end' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='9.79px' lengthAdjust='spacingAndGlyphs'>40</text>
+<polyline points='37.62,307.73 40.36,307.73 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='37.62,239.98 40.36,239.98 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='37.62,172.23 40.36,172.23 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='37.62,104.48 40.36,104.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='37.62,36.73 40.36,36.73 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='40.36,321.28 354.52,321.28 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<polyline points='70.76,324.02 70.76,321.28 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='121.43,324.02 121.43,321.28 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='172.11,324.02 172.11,321.28 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='222.78,324.02 222.78,321.28 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='273.45,324.02 273.45,321.28 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='324.12,324.02 324.12,321.28 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<text x='70.76' y='332.51' text-anchor='middle' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='33.75px' lengthAdjust='spacingAndGlyphs'>Baseline</text>
+<text x='121.43' y='332.51' text-anchor='middle' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='38.65px' lengthAdjust='spacingAndGlyphs'>Session 1</text>
+<text x='172.11' y='332.51' text-anchor='middle' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='38.65px' lengthAdjust='spacingAndGlyphs'>Session 2</text>
+<text x='222.78' y='332.51' text-anchor='middle' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='38.65px' lengthAdjust='spacingAndGlyphs'>Session 3</text>
+<text x='273.45' y='332.51' text-anchor='middle' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='38.65px' lengthAdjust='spacingAndGlyphs'>Session 4</text>
+<text x='324.12' y='332.51' text-anchor='middle' style='font-size: 8.80px;fill: #4D4D4D; font-family: "Arial";' textLength='38.65px' lengthAdjust='spacingAndGlyphs'>Session 5</text>
+<text x='197.44' y='352.20' text-anchor='middle' style='font-size: 11.00px; font-family: "Arial";' textLength='59.93px' lengthAdjust='spacingAndGlyphs'>Assessment</text>
+<text transform='translate(13.36,172.23) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: "Arial";' textLength='154.32px' lengthAdjust='spacingAndGlyphs'>Total Score (NeuroQoL Anxiety)</text>
+<rect x='252.37' y='51.49' width='78.63' height='62.61' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
+<text x='257.85' y='66.83' style='font-size: 12.00px; font-family: "Arial";' textLength='56.70px' lengthAdjust='spacingAndGlyphs'>Participant</text>
+<line x1='263.52' y1='82.71' x2='308.87' y2='82.71' style='stroke-width: 2.13; stroke: #1B9E77; stroke-dasharray: 19.92,8.54; stroke-linecap: butt;' />
+<circle cx='286.20' cy='82.71' r='1.95' style='stroke-width: 0.71; stroke: #1B9E77; fill: #1B9E77;' />
+<line x1='263.52' y1='99.99' x2='308.87' y2='99.99' style='stroke-width: 2.13; stroke: #7570B3; stroke-linecap: butt;' />
+<circle cx='286.20' cy='99.99' r='1.95' style='stroke-width: 0.71; stroke: #7570B3; fill: #7570B3;' />
+<text x='320.52' y='85.93' style='font-size: 9.00px; font-family: "Arial";' textLength='5.00px' lengthAdjust='spacingAndGlyphs'>1</text>
+<text x='320.52' y='103.21' style='font-size: 9.00px; font-family: "Arial";' textLength='5.00px' lengthAdjust='spacingAndGlyphs'>2</text>
+<text x='197.44' y='14.93' text-anchor='middle' style='font-size: 13.20px; font-family: "Arial";' textLength='281.97px' lengthAdjust='spacingAndGlyphs'>Anxiety Symptoms Over Time for Tx Completers</text>
+</g>
+</svg>
