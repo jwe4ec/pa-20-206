@@ -93,6 +93,16 @@ bbsiq_neg_int_items <- c("bbsiq_2b_neg", "bbsiq_3c_neg", "bbsiq_5a_neg", "bbsiq_
 bbsiq_neg_ext_items <- c("bbsiq_1c_neg", "bbsiq_4c_neg", "bbsiq_6a_neg", "bbsiq_7b_neg", 
                          "bbsiq_9b_neg", "bbsiq_10b_neg", "bbsiq_13c_neg")
 
+# Store items in list
+
+items <- list(mdib_neg = mdib_neg_items,
+              mdib_neg_int = mdib_neg_int_items,
+              mdib_neg_ext = mdib_neg_ext_items,
+              bbsiq_neg = bbsiq_neg_items,
+              bbsiq_neg_int = bbsiq_neg_int_items,
+              bbsiq_neg_ext = bbsiq_neg_ext_items,
+              neuroqol_anx = neuroqol_anx_items)
+
 # ---------------------------------------------------------------------------- #
 # Recode "prefer not to answer" values ----
 # ---------------------------------------------------------------------------- #
@@ -152,3 +162,7 @@ dir.create("./data/scored")
 
 save(mdib_dat, file = "./data/scored/mdib_dat.RData")
 save(mthd_dat, file = "./data/scored/mthd_dat.RData")
+
+dir.create("./data/helper")
+
+save(items, file = "./data/helper/items.RData")
