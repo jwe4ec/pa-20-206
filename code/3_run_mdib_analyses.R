@@ -117,11 +117,11 @@ mdib_res <- list(mdib_neg_int_bl_alpha = mdib_neg_int_bl_alpha,
                  bbsiq_neg_int_tot_bl_cor = bbsiq_neg_int_tot_bl_cor,
                  bbsiq_neg_ext_tot_bl_cor = bbsiq_neg_ext_tot_bl_cor)
 
-dir.create("./results")
+dir.create("./results/mdib")
 
-save(mdib_res, file = "./results/mdib_res.RData")
+save(mdib_res, file = "./results/mdib/mdib_res.RData")
 
-sink("./results/mdib_res.txt")
+sink("./results/mdib/mdib_res.txt")
 print(paste0("Unstandardized Cronbach's alpha and 95% bootstrapped CI for ",
              "'mdib_neg_int' items using complete baseline data (n = 42):"))
 cat("\n")
