@@ -14,7 +14,7 @@ The present scripts import preliminary datasets from two studies, for which recr
 
 `Prelim Data for Jeremy 2-3-22_MDIB.csv` are preliminary long-format data from a RedCap survey of patients with Huntington's disease (HD) administered at two time points. The study's purpose is to develop the Movement Disorders Interpretation Bias Scale (MDIB). Bot responses have already been cleaned from the data by Dr. Gibson and a graduate research assistant.
 
-Participants with above-threshold anxiety symptoms (NeuroQoL) are eligible to participate in the MindTrails-HD pilot study (see below).
+Participants with above-threshold anxiety symptoms (on NeuroQoL) are eligible to participate in the MindTrails-HD pilot study (see below). However, the `record_id`s in the two datasets do not correspond to each other.
 
 ## MindTrails-HD Pilot Study
 
@@ -22,4 +22,4 @@ Participants with above-threshold anxiety symptoms (NeuroQoL) are eligible to pa
 
 # Scripts
 
-TODO
+See comments in scripts in the `code` folder. The scripts output results to the `results` folder.
