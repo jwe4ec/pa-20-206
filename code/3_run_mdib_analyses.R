@@ -94,6 +94,18 @@ mdib_neg_ext_tot_bl_cor <- cor.test(mdib_dat_bl$mdib_neg_ext_tot,
                                     mdib_dat_bl$neuroqol_anx_tot,
                                     method = "pearson")
 
+# Compute Pearson product-moment correlation between negative bias (BBSIQ) and 
+# anxiety symptoms (NeuroQoL) at baseline using listwise deletion (default). Use 
+# total scores (vs. mean item scores) for consistency with other grant materials.
+
+bbsiq_neg_int_tot_bl_cor <- cor.test(mdib_dat_bl$bbsiq_neg_int_tot,
+                                     mdib_dat_bl$neuroqol_anx_tot,
+                                     method = "pearson")
+
+bbsiq_neg_ext_tot_bl_cor <- cor.test(mdib_dat_bl$bbsiq_neg_ext_tot,
+                                     mdib_dat_bl$neuroqol_anx_tot,
+                                     method = "pearson")
+
 # ---------------------------------------------------------------------------- #
 # Save and write results ----
 # ---------------------------------------------------------------------------- #
@@ -101,7 +113,9 @@ mdib_neg_ext_tot_bl_cor <- cor.test(mdib_dat_bl$mdib_neg_ext_tot,
 mdib_res <- list(mdib_neg_int_bl_alpha = mdib_neg_int_bl_alpha,
                  mdib_neg_ext_bl_alpha = mdib_neg_ext_bl_alpha,
                  mdib_neg_int_tot_bl_cor = mdib_neg_int_tot_bl_cor,
-                 mdib_neg_ext_tot_bl_cor = mdib_neg_ext_tot_bl_cor)
+                 mdib_neg_ext_tot_bl_cor = mdib_neg_ext_tot_bl_cor,
+                 bbsiq_neg_int_tot_bl_cor = bbsiq_neg_int_tot_bl_cor,
+                 bbsiq_neg_ext_tot_bl_cor = bbsiq_neg_ext_tot_bl_cor)
 
 dir.create("./results")
 
@@ -125,4 +139,12 @@ cat("\n")
 print(paste0("Pearson's correlation between 'mdib_neg_ext_tot' and 'neuroqol_anx_tot' ",
              "total scores using complete baseline data (n = 44):"))
 mdib_neg_ext_tot_bl_cor
+cat("\n")
+print(paste0("Pearson's correlation between 'bbsiq_neg_int_tot' and 'neuroqol_anx_tot' ",
+             "total scores using complete baseline data (n = 44):"))
+bbsiq_neg_int_tot_bl_cor
+cat("\n")
+print(paste0("Pearson's correlation between 'bbsiq_neg_ext_tot' and 'neuroqol_anx_tot' ",
+             "total scores using complete baseline data (n = 44):"))
+bbsiq_neg_ext_tot_bl_cor
 sink()
