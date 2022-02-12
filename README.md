@@ -33,7 +33,12 @@ The following scripts in the `code` folder are to be run in order.
 
 `1_define_functions.R` defines functions for use in later scripts.
 
-`2_compute_scores.R` imports the MDIB and MindTrails-HD datasets from `data/bot_cleaned` and `data/raw`, respectively; computes selected scale scores; and outputs scored datasets to `data/scored`. It also outputs a list of items comprising selected scales to `data/helper`.
+- [ ] **TODO: Update below for MindTrails-HD Data Server dataset**
+
+
+
+
+`2_compute_scores.R` imports the MDIB, MindTrails-HD RedCap, and MindTrails-HD Data Server datasets from `data/bot_cleaned`, `data/raw`, and `data/raw/from_angel` respectively; computes selected scale scores; and outputs scored datasets to `data/scored`. It also outputs a list of items comprising selected scales to `data/helper`.
 
 `3_run_mdib_analyses.R` imports the scored MDIB dataset, runs the analyses below, and outputs results to `results/mdib`.
 - Compute Cronbach's alpha for each MDIB scale at baseline
