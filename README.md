@@ -27,7 +27,7 @@ The following files in `data/raw/from_angel` are preliminary long-format raw dat
 - `HD OA-data-2022-02-11.csv`
 - `HD RR-data-2022-02-11.csv`
 
-`2022.02.14-redcap_record_id-mt_participant_id.csv` in `data` links the MindTrails-HD RedCap `record_id` to the MindTrails Data Server `participant_id`.
+`2022.02.14-redcap_record_id-mt_participant_id.csv` in `data` from Dr. Gibson links RedCap `record_id` to Data Server `participant_id`.
 
 # Scripts
 
