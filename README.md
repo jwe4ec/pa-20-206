@@ -40,7 +40,7 @@ The following scripts in the `code` folder are to be run in order.
 
 
 
-`2_compute_scores.R` imports the MDIB, MindTrails-HD RedCap, and MindTrails-HD Data Server datasets from `data/bot_cleaned`, `data/raw`, and `data/raw/from_angel` respectively; computes selected scale scores; and outputs scored datasets to `data/scored`. It also outputs a list of items comprising selected scales to `data/helper`.
+`2_compute_scores.R` imports the MDIB, MindTrails-HD RedCap, and MindTrails-HD Data Server datasets from `data/bot_cleaned`, `data/raw`, and `data/raw/from_angel` respectively. It cleans the data and, using the the MindTrails-HD linking file from `data`, links the RedCap and Data Server datasets. It then scores selected scales and outputs scored datasets to `data/scored` and a list of each scale's items to `data/helper`.
 
 `3_run_mdib_analyses.R` imports the scored MDIB dataset, runs the analyses below, and outputs results to `results/mdib`.
 - Compute Cronbach's alpha for each MDIB scale at baseline
