@@ -14,7 +14,7 @@ The present scripts import deidentified preliminary datasets (stored privately o
 
 `Prelim Data for Jeremy 2-3-22_MDIB.csv` in `data/bot_cleaned` are preliminary long-format data from Dr. Gibson collected via a RedCap survey of patients with Huntington's disease (HD) administered at two time points. The study's purpose is to develop the Movement Disorders Interpretation Bias Scale (MDIB). Bot responses have already been cleaned from the data by Dr. Gibson and a graduate research assistant.
 
-Participants with above-threshold anxiety symptoms (on NeuroQoL) are eligible to participate in the MindTrails-HD pilot study (see below). However, the `record_id`s in the two datasets do not correspond to each other.
+Participants with above-threshold anxiety symptoms (on NeuroQoL) are eligible to participate in the MindTrails-HD pilot study (see below). However, the `record_id`s in the two RedCap datasets do not correspond to each other.
 
 ## MindTrails-HD Pilot Study
 
@@ -26,6 +26,8 @@ The following files in `data/raw/from_angel` are preliminary long-format raw dat
 - `HD DASS-data-2022-02-11.csv`
 - `HD OA-data-2022-02-11.csv`
 - `HD RR-data-2022-02-11.csv`
+
+`<YYYY.MM.DD>-redcap_record_id-mt_participant_id.csv` in `data` links the MindTrails-HD RedCap `record_id` to the MindTrails Data Server `participant_id`.
 
 # Scripts
 
