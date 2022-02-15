@@ -2,21 +2,21 @@
 
 Author: Jeremy W. Eberle
 
-# Background
+## Background
 
 The present scripts conduct preliminary analyses for [Professor Jessie Gibson](https://www.nursing.virginia.edu/people/js6zn/)'s NIH [K23](https://researchtraining.nih.gov/programs/career-development/k23) ([PA-20-206](https://grants.nih.gov/grants/guide/pa-files/PA-20-206.html)) submission titled "Modification of Threat Interpretation Bias to Reduce Anxiety in Neurodegenerative Movement Disorders."
 
-# Data
+## Data
 
 The present scripts import deidentified preliminary datasets (stored privately on UVA Box) from two studies, for which recruitment is ongoing.
 
-## MDIB Development Study
+### MDIB Development Study
 
 `Prelim Data for Jeremy 2-3-22_MDIB.csv` in `data/bot_cleaned` are preliminary long-format data from Dr. Gibson collected via a RedCap survey of patients with Huntington's disease (HD) administered at two time points. The study's purpose is to develop the Movement Disorders Interpretation Bias Scale (MDIB). Bot responses have already been cleaned from the data by Dr. Gibson and a graduate research assistant.
 
 Participants with above-threshold anxiety symptoms (on NeuroQoL) are eligible to participate in the MindTrails-HD pilot study (see below). However, the `record_id`s in the two RedCap datasets do not correspond to each other.
 
-## MindTrails-HD Pilot Study
+### MindTrails-HD Pilot Study
 
 `Prelim Data for Jeremy 2-3-22_MindTrails-HD pilot.csv` in `data/raw` are preliminary long-format raw data from Dr. Gibson collected via a RedCap survey for a pilot study of an adaptation of interpretation bias training (MindTrails for Huntington's Disease; MindTrails-HD) for anxious (on NeuroQoL) patients with HD.
 
@@ -29,7 +29,7 @@ The following files in `data/raw/from_angel` are preliminary long-format raw dat
 
 `2022.02.14-redcap_record_id-mt_participant_id.csv` in `data` from Dr. Gibson links RedCap `record_id` to Data Server `participant_id`.
 
-# Scripts
+## Scripts
 
 The following scripts in the `code` folder are to be run in order.
 
