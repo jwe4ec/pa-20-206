@@ -39,7 +39,7 @@ set.seed(1234)
 # ---------------------------------------------------------------------------- #
 
 load("./data/scored/mdib_dat.RData")
-load("./data/helper/items.RData")
+load("./data/helper/mdib_dat_items.RData")
 
 # ---------------------------------------------------------------------------- #
 # Restrict to baseline ----
@@ -58,23 +58,23 @@ mdib_dat_bl <- mdib_dat[mdib_dat$redcap_event_name == "baseline_arm_1", ]
 # Compute bootstrapped CIs for negative MDIB scales at baseline using pairwise 
 # deletion (default)
 
-# psych::alpha(mdib_dat_bl[, items$mdib_neg_int], n.iter = 1000)$boot.ci
-# psych::alpha(mdib_dat_bl[, items$mdib_neg_ext], n.iter = 1000)$boot.ci
+# psych::alpha(mdib_dat_bl[, mdib_dat_items$mdib_neg_int], n.iter = 1000)$boot.ci
+# psych::alpha(mdib_dat_bl[, mdib_dat_items$mdib_neg_ext], n.iter = 1000)$boot.ci
 
 # Given that pairwise deletion yields warning that matrix is not positive definite 
 # for "mdib_neg_ext", try listwise deletion. Yields same warning.
 
-# psych::alpha(mdib_dat_bl[, items$mdib_neg_ext], n.iter = 1000, 
+# psych::alpha(mdib_dat_bl[, mdib_dat_items$mdib_neg_ext], n.iter = 1000, 
 #              use = "complete.obs")$boot.ci
 
 # Applying listwise deletion prior to running function yields no warning, so use
 # this approach for both scales
 
-complete_dat <- na.omit(mdib_dat_bl[, items$mdib_neg_int])
+complete_dat <- na.omit(mdib_dat_bl[, mdib_dat_items$mdib_neg_int])
 nrow(complete_dat)
 mdib_neg_int_bl_alpha <- psych::alpha(complete_dat, n.iter = 1000)$boot.ci
 
-complete_dat <- na.omit(mdib_dat_bl[, items$mdib_neg_ext])
+complete_dat <- na.omit(mdib_dat_bl[, mdib_dat_items$mdib_neg_ext])
 nrow(complete_dat)
 mdib_neg_ext_bl_alpha <- psych::alpha(complete_dat, n.iter = 1000)$boot.ci
 
