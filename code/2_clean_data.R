@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------- #
-# Compute Scores
+# Clean Data
 # Author: Jeremy W. Eberle
 # ---------------------------------------------------------------------------- #
 
@@ -50,6 +50,11 @@ names(mthd_dat_ds) <- sub("-data-2022-02-11.csv", "", filenames)
 
 names(mthd_dat_ds) <- sub("HD ", "", names(mthd_dat_ds))
 names(mthd_dat_ds) <- tolower(names(mthd_dat_ds))
+names(mthd_dat_ds)[names(mthd_dat_ds) == "dass"] <- "dass21_as"
+
+# Import MT-HD data to link RedCap and Data Server data
+
+mthd_dat_lk <- read.csv("./data/2022.02.14-redcap_record_id-mt_participant_id.csv")
 
 # ---------------------------------------------------------------------------- #
 # Remove blank rows ----
@@ -72,6 +77,46 @@ sum(is.na(mthd_dat_rc$record_id)) == 0
 # No "participant_id"s are NA in "mthd_dat_ds"
 
 all(unlist(lapply(mthd_dat_ds, function(x) sum(is.na(x$participant_id)) == 0)))
+
+# ---------------------------------------------------------------------------- #
+# Link MT-HD datasets ----
+# ---------------------------------------------------------------------------- #
+
+# Add "participant_id" to "mthd_dat_rc" and "record_id" to "mthd_dat_ds"
+
+mthd_dat_rc <- merge(mthd_dat_rc, 
+                     mthd_dat_lk[, c("record_id", "participant_id")],
+                     by = "record_id",
+                     all.x = TRUE)
+
+mthd_dat_ds <- lapply(mthd_dat_ds, function(x) {
+  merge(x,
+        mthd_dat_lk[, c("record_id", "participant_id")],
+        by = "participant_id",
+        all.x = TRUE)
+})
+
+# ---------------------------------------------------------------------------- #
+# Recode session-related columns in "mthd_dat_ds" ----
+# ---------------------------------------------------------------------------- #
+
+# "session" in "dass21_as" and "oa" tables conflates eligibility status with
+# time point. Create "session_only" column that reflects only time point and
+# rename "session" to "session_only" in other tables.
+
+for (i in 1:length(mthd_dat_ds)) {
+  if (names(mthd_dat_ds[i]) %in% c("dass21_as", "oa")) {
+    names(mthd_dat_ds[[i]])[names(mthd_dat_ds[[i]]) == "session"] <- 
+      "session_and_eligibility_status"
+    
+    mthd_dat_ds[[i]][, "session_only"] <-
+      mthd_dat_ds[[i]][, "session_and_eligibility_status"]
+    mthd_dat_ds[[i]][mthd_dat_ds[[i]][, "session_only"] %in% c("ELIGIBLE", ""),
+                     "session_only"] <- "Eligibility"
+  } else if ("session" %in% names(mthd_dat_ds[[i]])) {
+    names(mthd_dat_ds[[i]])[names(mthd_dat_ds[[i]]) == "session"] <- "session_only"
+  }
+}
 
 # ---------------------------------------------------------------------------- #
 # Define scale items ----
@@ -214,14 +259,14 @@ mdib_dat[, target_items][mdib_dat[, target_items] == 99] <- NA
 
 # "mthd_dat_rc" does not appear to contain any such values
 
-summary(mthd_dat_rc[, c(mdib_dat_items$mdib_neg, 
-                        mdib_dat_items$neuroqol_anx)])
+summary(mthd_dat_rc[, c(mdib_dat_items$mdib_neg, mdib_dat_items$neuroqol_anx)])
 
-# TODO: Continue here and below for "mthd_dat_ds"
+# "mthd_dat_ds" does not appear to contain any such values (coded 555)
 
-
-
-
+sum(mthd_dat_ds$bbsiq[, mthd_dat_ds_items$bbsiq_neg] == 555) == 0
+sum(mthd_dat_ds$dass21_as[, mthd_dat_ds_items$dass21_as] == 555) == 0
+sum(mthd_dat_ds$oa[, mthd_dat_ds_items$oa] == 555) == 0
+sum(mthd_dat_ds$rr[, mthd_dat_ds_items$rr_neg] == 555) == 0
 
 # ---------------------------------------------------------------------------- #
 # Score scales ----
@@ -229,11 +274,11 @@ summary(mthd_dat_rc[, c(mdib_dat_items$mdib_neg,
 
 # Compute mean of available items
 
-mdib_dat$mdib_neg_int_m <-  rowMeans(mdib_dat[, mdib_neg_int_items], na.rm = TRUE)
-mdib_dat$mdib_neg_ext_m <-  rowMeans(mdib_dat[, mdib_neg_ext_items], na.rm = TRUE)
-mdib_dat$bbsiq_neg_int_m <- rowMeans(mdib_dat[, bbsiq_neg_int_items], na.rm = TRUE)
-mdib_dat$bbsiq_neg_ext_m <- rowMeans(mdib_dat[, bbsiq_neg_ext_items], na.rm = TRUE)
-mdib_dat$neuroqol_anx_m <-  rowMeans(mdib_dat[, neuroqol_anx_items], na.rm = TRUE)
+mdib_dat$mdib_neg_int_m <-  rowMeans(mdib_dat[, mdib_dat_items$mdib_neg_int], na.rm = TRUE)
+mdib_dat$mdib_neg_ext_m <-  rowMeans(mdib_dat[, mdib_dat_items$mdib_neg_ext], na.rm = TRUE)
+mdib_dat$bbsiq_neg_int_m <- rowMeans(mdib_dat[, mdib_dat_items$bbsiq_neg_int], na.rm = TRUE)
+mdib_dat$bbsiq_neg_ext_m <- rowMeans(mdib_dat[, mdib_dat_items$bbsiq_neg_ext], na.rm = TRUE)
+mdib_dat$neuroqol_anx_m <-  rowMeans(mdib_dat[, mdib_dat_items$neuroqol_anx], na.rm = TRUE)
 
 mdib_dat$mdib_neg_int_m[is.nan(mdib_dat$mdib_neg_int_m)] <- NA
 mdib_dat$mdib_neg_ext_m[is.nan(mdib_dat$mdib_neg_ext_m)] <- NA
@@ -241,25 +286,46 @@ mdib_dat$bbsiq_neg_int_m[is.nan(mdib_dat$bbsiq_neg_int_m)] <- NA
 mdib_dat$bbsiq_neg_ext_m[is.nan(mdib_dat$bbsiq_neg_ext_m)] <- NA
 mdib_dat$neuroqol_anx_m[is.nan(mdib_dat$neuroqol_anx_m)] <- NA
 
-mthd_dat_rc$mdib_neg_int_m <-  rowMeans(mthd_dat_rc[, mdib_neg_int_items], na.rm = TRUE)
-mthd_dat_rc$mdib_neg_ext_m <-  rowMeans(mthd_dat_rc[, mdib_neg_ext_items], na.rm = TRUE)
-mthd_dat_rc$neuroqol_anx_m <-  rowMeans(mthd_dat_rc[, neuroqol_anx_items], na.rm = TRUE)
+mthd_dat_rc$mdib_neg_int_m <-  rowMeans(mthd_dat_rc[, mdib_dat_items$mdib_neg_int], na.rm = TRUE)
+mthd_dat_rc$mdib_neg_ext_m <-  rowMeans(mthd_dat_rc[, mdib_dat_items$mdib_neg_ext], na.rm = TRUE)
+mthd_dat_rc$neuroqol_anx_m <-  rowMeans(mthd_dat_rc[, mdib_dat_items$neuroqol_anx], na.rm = TRUE)
 
 mthd_dat_rc$mdib_neg_int_m[is.nan(mthd_dat_rc$mdib_neg_int_m)] <- NA
 mthd_dat_rc$mdib_neg_ext_m[is.nan(mthd_dat_rc$mdib_neg_ext_m)] <- NA
 mthd_dat_rc$neuroqol_anx_m[is.nan(mthd_dat_rc$neuroqol_anx_m)] <- NA
 
+mthd_dat_ds$bbsiq$bbsiq_neg_int_m <- rowMeans(mthd_dat_ds$bbsiq[, mthd_dat_ds_items$bbsiq_neg_int], na.rm = TRUE)
+mthd_dat_ds$bbsiq$bbsiq_neg_ext_m <- rowMeans(mthd_dat_ds$bbsiq[, mthd_dat_ds_items$bbsiq_neg_ext], na.rm = TRUE)
+mthd_dat_ds$rr$rr_neg_threat_m <-    rowMeans(mthd_dat_ds$rr[, mthd_dat_ds_items$rr_neg_threat], na.rm = TRUE)
+mthd_dat_ds$rr$rr_neg_nonthreat_m <- rowMeans(mthd_dat_ds$rr[, mthd_dat_ds_items$rr_neg_nonthreat], na.rm = TRUE)
+mthd_dat_ds$oa$oa_m <-               rowMeans(mthd_dat_ds$oa[, mthd_dat_ds_items$oa], na.rm = TRUE)
+mthd_dat_ds$dass21_as$dass21_as_m <- rowMeans(mthd_dat_ds$dass21_as[, mthd_dat_ds_items$dass21_as], na.rm = TRUE)
+
+mthd_dat_ds$bbsiq$bbsiq_neg_int_m[is.nan(mthd_dat_ds$bbsiq$bbsiq_neg_int_m)] <- NA
+mthd_dat_ds$bbsiq$bbsiq_neg_ext_m[is.nan(mthd_dat_ds$bbsiq$bbsiq_neg_ext_m)] <- NA
+mthd_dat_ds$rr$rr_neg_threat_m[is.nan(mthd_dat_ds$rr$rr_neg_threat_m)] <- NA
+mthd_dat_ds$rr$rr_neg_nonthreat_m[is.nan(mthd_dat_ds$rr$rr_neg_nonthreat_m)] <- NA
+mthd_dat_ds$oa$oa_m[is.nan(mthd_dat_ds$oa$oa_m)] <- NA
+mthd_dat_ds$dass21_as$dass21_as_m[is.nan(mthd_dat_ds$dass21_as$dass21_as_m)] <- NA
+
 # Compute total scores based on mean of available items
 
-mdib_dat$mdib_neg_int_tot <-  mdib_dat$mdib_neg_int_m*length(mdib_neg_int_items)
-mdib_dat$mdib_neg_ext_tot <-  mdib_dat$mdib_neg_ext_m*length(mdib_neg_ext_items)
-mdib_dat$bbsiq_neg_int_tot <- mdib_dat$bbsiq_neg_int_m*length(bbsiq_neg_int_items)
-mdib_dat$bbsiq_neg_ext_tot <- mdib_dat$bbsiq_neg_ext_m*length(bbsiq_neg_ext_items)
-mdib_dat$neuroqol_anx_tot <-  mdib_dat$neuroqol_anx_m*length(neuroqol_anx_items)
+mdib_dat$mdib_neg_int_tot <-  mdib_dat$mdib_neg_int_m*length(mdib_dat_items$mdib_neg_int)
+mdib_dat$mdib_neg_ext_tot <-  mdib_dat$mdib_neg_ext_m*length(mdib_dat_items$mdib_neg_ext)
+mdib_dat$bbsiq_neg_int_tot <- mdib_dat$bbsiq_neg_int_m*length(mdib_dat_items$bbsiq_neg_int)
+mdib_dat$bbsiq_neg_ext_tot <- mdib_dat$bbsiq_neg_ext_m*length(mdib_dat_items$bbsiq_neg_ext)
+mdib_dat$neuroqol_anx_tot <-  mdib_dat$neuroqol_anx_m*length(mdib_dat_items$neuroqol_anx)
 
-mthd_dat_rc$mdib_neg_int_tot <- mthd_dat_rc$mdib_neg_int_m*length(mdib_neg_int_items)
-mthd_dat_rc$mdib_neg_ext_tot <- mthd_dat_rc$mdib_neg_ext_m*length(mdib_neg_ext_items)
-mthd_dat_rc$neuroqol_anx_tot <- mthd_dat_rc$neuroqol_anx_m*length(neuroqol_anx_items)
+mthd_dat_rc$mdib_neg_int_tot <- mthd_dat_rc$mdib_neg_int_m*length(mdib_dat_items$mdib_neg_int)
+mthd_dat_rc$mdib_neg_ext_tot <- mthd_dat_rc$mdib_neg_ext_m*length(mdib_dat_items$mdib_neg_ext)
+mthd_dat_rc$neuroqol_anx_tot <- mthd_dat_rc$neuroqol_anx_m*length(mdib_dat_items$neuroqol_anx)
+
+mthd_dat_ds$bbsiq$bbsiq_neg_int_tot <- mthd_dat_ds$bbsiq$bbsiq_neg_int_m*length(mthd_dat_ds_items$bbsiq_neg_int)
+mthd_dat_ds$bbsiq$bbsiq_neg_ext_tot <- mthd_dat_ds$bbsiq$bbsiq_neg_ext_m*length(mthd_dat_ds_items$bbsiq_neg_ext)
+mthd_dat_ds$rr$rr_neg_threat_tot <-    mthd_dat_ds$rr$rr_neg_threat_m*length(mthd_dat_ds_items$rr_neg_threat)
+mthd_dat_ds$rr$rr_neg_nonthreat_tot <- mthd_dat_ds$rr$rr_neg_nonthreat_m*length(mthd_dat_ds_items$rr_neg_nonthreat)
+mthd_dat_ds$oa$oa_tot <-               mthd_dat_ds$oa$oa_m*length(mthd_dat_ds_items$oa)
+mthd_dat_ds$dass21_as$dass21_as_tot <- mthd_dat_ds$dass21_as$dass21_as_m*length(mthd_dat_ds_items$dass21_as)
 
 # ---------------------------------------------------------------------------- #
 # Export data ----
@@ -269,7 +335,9 @@ dir.create("./data/scored")
 
 save(mdib_dat, file = "./data/scored/mdib_dat.RData")
 save(mthd_dat_rc, file = "./data/scored/mthd_dat_rc.RData")
+save(mthd_dat_ds, file = "./data/scored/mthd_dat_ds.RData")
 
 dir.create("./data/helper")
 
-save(items, file = "./data/helper/items.RData")
+save(mdib_dat_items, file = "./data/helper/mdib_dat_items.RData")
+save(mthd_dat_ds_items, file = "./data/helper/mthd_dat_ds_items.RData")
