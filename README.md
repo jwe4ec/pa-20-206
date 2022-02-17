@@ -18,14 +18,14 @@ Participants with above-threshold anxiety symptoms (on NeuroQoL) are eligible to
 
 ### MindTrails-HD Pilot Study
 
-`Prelim Data for Jeremy 2-3-22_MindTrails-HD pilot.csv` in `data/mthd/raw/from_rc` are preliminary long-format raw data from Dr. Gibson collected via a RedCap survey for a pilot study of an adaptation of interpretation bias training (MindTrails for Huntington's Disease; MindTrails-HD) for anxious (on NeuroQoL) patients with HD.
+`Prelim Data for Jeremy 2-17-22_MindTrails-HD pilot.csv` in `data/mthd/raw/from_rc` are preliminary long-format raw data from Dr. Gibson collected via a RedCap survey for a pilot study of an adaptation of interpretation bias training (MindTrails for Huntington's Disease; MindTrails-HD) for anxious (on NeuroQoL) patients with HD.
 
-The following files in `data/mthd/raw/from_ds` are preliminary long-format raw data collected via the MindTrails website and extracted from the TET study dataset by [Ángel Vela de la Garza Evia](https://github.com/avel22) from the `calm` database on the `teachmanlab` Data Server.
+The following files in `data/mthd/raw/from_ds/2022.02.17` are preliminary long-format raw data collected via the MindTrails website and extracted from the TET study dataset by [Ángel Vela de la Garza Evia](https://github.com/avel22) from the `calm` database on the `teachmanlab` Data Server.
 
-- `HD BBSIQ-data-2022-02-11.csv`
-- `HD DASS-data-2022-02-11.csv`
-- `HD OA-data-2022-02-11.csv`
-- `HD RR-data-2022-02-11.csv`
+- `HD BBSIQ-data-2022-02-17.csv`
+- `HD DASS-data-2022-02-17.csv`
+- `HD OA-data-2022-02-17.csv`
+- `HD RR-data-2022-02-17.csv`
 
 `2022.02.14-redcap_record_id-mt_participant_id.csv` in `data/mthd/link` from Dr. Gibson links RedCap `record_id` to Data Server `participant_id`.
 
@@ -45,6 +45,7 @@ The following scripts in the `code` folder are to be run in order.
 `4_run_mthd_analyses.R` imports the scored MindTrails-HD dataset, runs the analyses below, and outputs results to `results/mthd/plots`.
 - Plot raw scale scores below over time for treatment completers
   - NeuroQoL anxiety
-  - OASIS, DASS-21-AS
   - Negative BBSIQ (Internal), Negative BBSIQ (External)
+- Note: Raw scale scores below were also plotted for treatment completers using an earlier dataset (code is retained but commented out)
+  - OASIS, DASS-21-AS
   - Negative RR (Threat), Negative RR (Nonthreat)
