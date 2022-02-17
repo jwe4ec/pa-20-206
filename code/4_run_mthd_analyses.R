@@ -39,8 +39,8 @@ set.seed(1234)
 # Import data ----
 # ---------------------------------------------------------------------------- #
 
-load("./data/scored/mthd_dat_rc.RData")
-load("./data/scored/mthd_dat_ds.RData")
+load("./data/mthd/scored/mthd_dat_rc.RData")
+load("./data/mthd/scored/mthd_dat_ds.RData")
 
 # ---------------------------------------------------------------------------- #
 # Prepare data for plot ----

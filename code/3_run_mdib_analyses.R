@@ -38,8 +38,8 @@ set.seed(1234)
 # Import data ----
 # ---------------------------------------------------------------------------- #
 
-load("./data/scored/mdib_dat.RData")
-load("./data/helper/mdib_dat_items.RData")
+load("./data/mdib/scored/mdib_dat.RData")
+load("./data/mdib/helper/mdib_dat_items.RData")
 
 # ---------------------------------------------------------------------------- #
 # Restrict to baseline ----
@@ -117,7 +117,7 @@ mdib_res <- list(mdib_neg_int_bl_alpha = mdib_neg_int_bl_alpha,
                  bbsiq_neg_int_tot_bl_cor = bbsiq_neg_int_tot_bl_cor,
                  bbsiq_neg_ext_tot_bl_cor = bbsiq_neg_ext_tot_bl_cor)
 
-dir.create("./results/mdib")
+dir.create("./results/mdib", recursive = TRUE)
 
 save(mdib_res, file = "./results/mdib/mdib_res.RData")
 
