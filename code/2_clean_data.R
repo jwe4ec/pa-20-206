@@ -34,19 +34,19 @@ groundhog_day <- version_control()
 
 # Import MDIB data from RedCap
 
-mdib_dat <- read.csv("./data/bot_cleaned/Prelim Data for Jeremy 2-3-22_MDIB.csv")
+mdib_dat <- read.csv("./data/mdib/bot_cleaned/Prelim Data for Jeremy 2-3-22_MDIB.csv")
 
 # Import MT-HD data from RedCap
 
-mthd_dat_rc <- read.csv("./data/raw/Prelim Data for Jeremy 2-3-22_MindTrails-HD pilot.csv")
+mthd_dat_rc <- read.csv("./data/mthd/raw/from_rc/Prelim Data for Jeremy 2-17-22_MindTrails-HD pilot.csv")
 
 # Import MT-HD data from Data Server
 
-ds_data_dir <- paste0(wd_dir, "/data/raw/from_angel")
+ds_data_dir <- paste0(wd_dir, "/data/mthd/raw/from_ds/2022.02.17")
 filenames <- list.files(ds_data_dir, pattern = "*.csv", full.names = FALSE)
 
 mthd_dat_ds <- lapply(paste0(ds_data_dir, "/", filenames), read.csv)
-names(mthd_dat_ds) <- sub("-data-2022-02-11.csv", "", filenames)
+names(mthd_dat_ds) <- sub("-data-2022-02-17.csv", "", filenames)
 
 names(mthd_dat_ds) <- sub("HD ", "", names(mthd_dat_ds))
 names(mthd_dat_ds) <- tolower(names(mthd_dat_ds))
@@ -54,7 +54,7 @@ names(mthd_dat_ds)[names(mthd_dat_ds) == "dass"] <- "dass21_as"
 
 # Import MT-HD data to link RedCap and Data Server data
 
-mthd_dat_lk <- read.csv("./data/2022.02.14-redcap_record_id-mt_participant_id.csv")
+mthd_dat_lk <- read.csv("./data/mthd/link/2022.02.14-redcap_record_id-mt_participant_id.csv")
 
 # ---------------------------------------------------------------------------- #
 # Remove blank rows ----
@@ -129,9 +129,9 @@ all(names(mdib_dat)[grepl("md_bbsiq", names(mdib_dat)) & grepl("neg", names(mdib
       names(mthd_dat_rc)[grepl("md_bbsiq", names(mthd_dat_rc)) & grepl("neg", names(mthd_dat_rc))])
 
 all(names(mdib_dat)[grepl("neuroqol", names(mdib_dat)) & grepl("anx", names(mdib_dat)) &
-                      !(grepl("complete", names(mdib_dat)))] ==
+                      !(grepl("complete", names(mdib_dat))) & !(grepl("timestamp", names(mdib_dat)))] ==
       names(mthd_dat_rc)[grepl("neuroqol", names(mthd_dat_rc)) & grepl("anx", names(mthd_dat_rc)) &
-                           !(grepl("complete", names(mthd_dat_rc)))])
+                           !(grepl("complete", names(mthd_dat_rc))) & !(grepl("timestamp", names(mthd_dat_rc)))])
 
 # Note: Variable names for negative interpretation bias (BBSIQ) differ between
 # MDIB and MT-HD Data Server datasets
@@ -149,7 +149,7 @@ bbsiq_neg_items_mdib <-
                     grepl("neg", names(mdib_dat))]
 neuroqol_anx_items <-
   names(mdib_dat)[grepl("neuroqol", names(mdib_dat)) & grepl("anx", names(mdib_dat)) &
-                    !(grepl("complete", names(mdib_dat)))]
+                    !(grepl("complete", names(mdib_dat))) & !(grepl("timestamp", names(mdib_dat)))]
 
 all(mdib_neg_items == c("md_bbsiq_1b_neg", "md_bbsiq_2a_neg", "md_bbsiq_3c_neg", 
                         "md_bbsiq_4c_neg", "md_bbsiq_5a_neg", "md_bbsiq_6b_neg", 
@@ -249,7 +249,7 @@ mthd_dat_ds_items <- list(rr_neg_threat = rr_neg_threat_items,
 # Recode "prefer not to answer" values ----
 # ---------------------------------------------------------------------------- #
 
-# Recode "prefer not to answer" (coded as 99) in "mdib_dat"
+# Recode "prefer not to answer" (coded as 99) as NA in "mdib_dat"
 
 target_items <- c(mdib_dat_items$mdib_neg, 
                   mdib_dat_items$bbsiq_neg, 
@@ -261,12 +261,15 @@ mdib_dat[, target_items][mdib_dat[, target_items] == 99] <- NA
 
 summary(mthd_dat_rc[, c(mdib_dat_items$mdib_neg, mdib_dat_items$neuroqol_anx)])
 
-# "mthd_dat_ds" does not appear to contain any such values (coded 555)
+# Recode "prefer not to answer" (coded as 555) as NA in "mthd_dat_ds" where present
 
 sum(mthd_dat_ds$bbsiq[, mthd_dat_ds_items$bbsiq_neg] == 555) == 0
 sum(mthd_dat_ds$dass21_as[, mthd_dat_ds_items$dass21_as] == 555) == 0
 sum(mthd_dat_ds$oa[, mthd_dat_ds_items$oa] == 555) == 0
 sum(mthd_dat_ds$rr[, mthd_dat_ds_items$rr_neg] == 555) == 0
+
+mthd_dat_ds$rr[, mthd_dat_ds_items$rr_neg][mthd_dat_ds$rr[, mthd_dat_ds_items$rr_neg] == 
+                                             555] <- NA
 
 # ---------------------------------------------------------------------------- #
 # Score scales ----
@@ -331,13 +334,15 @@ mthd_dat_ds$dass21_as$dass21_as_tot <- mthd_dat_ds$dass21_as$dass21_as_m*length(
 # Export data ----
 # ---------------------------------------------------------------------------- #
 
-dir.create("./data/scored")
+dir.create("./data/mdib/scored")
+dir.create("./data/mthd/scored")
 
-save(mdib_dat, file = "./data/scored/mdib_dat.RData")
-save(mthd_dat_rc, file = "./data/scored/mthd_dat_rc.RData")
-save(mthd_dat_ds, file = "./data/scored/mthd_dat_ds.RData")
+save(mdib_dat, file = "./data/mdib/scored/mdib_dat.RData")
+save(mthd_dat_rc, file = "./data/mthd/scored/mthd_dat_rc.RData")
+save(mthd_dat_ds, file = "./data/mthd/scored/mthd_dat_ds.RData")
 
-dir.create("./data/helper")
+dir.create("./data/mdib/helper")
+dir.create("./data/mthd/helper")
 
-save(mdib_dat_items, file = "./data/helper/mdib_dat_items.RData")
-save(mthd_dat_ds_items, file = "./data/helper/mthd_dat_ds_items.RData")
+save(mdib_dat_items, file = "./data/mdib/helper/mdib_dat_items.RData")
+save(mthd_dat_ds_items, file = "./data/mthd/helper/mthd_dat_ds_items.RData")

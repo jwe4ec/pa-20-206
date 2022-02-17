@@ -39,8 +39,8 @@ set.seed(1234)
 # Import data ----
 # ---------------------------------------------------------------------------- #
 
-load("./data/scored/mthd_dat_rc.RData")
-load("./data/scored/mthd_dat_ds.RData")
+load("./data/mthd/scored/mthd_dat_rc.RData")
+load("./data/mthd/scored/mthd_dat_ds.RData")
 
 # ---------------------------------------------------------------------------- #
 # Prepare data for plot ----
@@ -118,9 +118,17 @@ for (i in 1:length(tot_scores_ds)) {
           all.x = TRUE)
 }
 
+# Define index of random consecutive integers for plotted participants
+
+participant_rnd_ids <- sample(1:length(unique(plot_df$record_id)),
+                              size = length(unique(plot_df$record_id)))
+
+plot_df$participant_rnd_id <- rep(participant_rnd_ids,
+                                  each = length(assessments))
+
 # Recode participant and assessment variables as factors for ggplot2
 
-plot_df$record_id <- factor(plot_df$record_id)
+plot_df$participant_rnd_id <- factor(plot_df$participant_rnd_id)
 plot_df$assessment <- factor(plot_df$assessment, levels = assessments)
 
 # Sort plotting data
@@ -131,8 +139,8 @@ plot_df <- plot_df[order(plot_df$record_id, plot_df$assessment), ]
 # Plot scale scores over time ----
 # ---------------------------------------------------------------------------- #
 
-# Define function to plot scale scores over 5 weeks for completer sample (n = 2). 
-# Use total scores (vs. mean item scores) for consistency with other grant materials. 
+# Define function to plot scale scores over 5 weeks for completer sample. Use 
+# total scores (vs. mean item scores) for consistency with other grant materials. 
 # Use "loess" smoothing to connect points with "geom_smooth" given that "geom_line"
 # does not connect points through NAs.
 
@@ -144,7 +152,9 @@ plot_tot_scores <- function(plot_df, y_var,
   tot_plot <- 
     ggplot(plot_df,
            aes(x = assessment, y = {{y_var}},
-               group = record_id, color = record_id, linetype = record_id)) +
+               group = participant_rnd_id, 
+               color = participant_rnd_id, 
+               linetype = participant_rnd_id)) +
     geom_smooth(method = "loess", se = FALSE) +
     geom_point(data = plot_df) +
     labs(title = title,
@@ -152,10 +162,12 @@ plot_tot_scores <- function(plot_df, y_var,
          y = y_label) +
     scale_linetype_manual(name = "Participant",
                           values = c("1" = "longdash",
-                                     "2" = "solid")) +
+                                     "2" = "solid",
+                                     "3" = "twodash")) +
     scale_color_manual(name = "Participant",
                        values = c("1" = "#1b9e77", 
-                                  "2" = "#7570b3")) +
+                                  "2" = "#7570b3",
+                                  "3" = "#d95f02")) +
     scale_y_continuous(breaks = y_breaks,
                        limits = c(scale_min, scale_max)) +
     theme_classic() +
@@ -172,7 +184,10 @@ plot_tot_scores <- function(plot_df, y_var,
   return(tot_plot)
 }
 
-# Run function for each outcome
+# Run function for each outcome. All plots below were viewed with 2 treatment
+# completers (RedCap data as of 2/3/22, Data Server data as of 2/11/22), but 
+# only NeuroQoL and BBSIQ plots were viewed for 3 treatment completers (RedCap 
+# and Data Server data as of 2/17/22).
 
 neuroqol_anx_tot_plot <- plot_tot_scores(
   plot_df, neuroqol_anx_tot,
@@ -181,57 +196,57 @@ neuroqol_anx_tot_plot <- plot_tot_scores(
   c(1:5)*8, 1*8, 5*8, c(0.8, 0.8)
 )
 
-oa_tot_plot <- plot_tot_scores(
-  plot_df, oa_tot,
-  "Fig. 3. Anxiety Over Time for Tx Compl.",
-  "Total Score (OASIS)",
-  c(0:4)*5, 0*5, 4*5, c(0.8, 0.8) 
-)
-
-dass21_as_tot_plot <- plot_tot_scores(
-  plot_df, dass21_as_tot,
-  "Fig. 4. Anxiety Over Time for Tx Compl.",
-  "Total Score (DASS-21-AS)",
-  c(0:3)*7, 0*7, 3*7, c(0.8, 0.8)
-)
+# oa_tot_plot <- plot_tot_scores(
+#   plot_df, oa_tot,
+#   "Fig. 3. Anxiety Over Time for Tx Compl.",
+#   "Total Score (OASIS)",
+#   c(0:4)*5, 0*5, 4*5, c(0.8, 0.8)
+# )
+# 
+# dass21_as_tot_plot <- plot_tot_scores(
+#   plot_df, dass21_as_tot,
+#   "Fig. 4. Anxiety Over Time for Tx Compl.",
+#   "Total Score (DASS-21-AS)",
+#   c(0:3)*7, 0*7, 3*7, c(0.8, 0.8)
+# )
 
 bbsiq_neg_int_tot_plot <- plot_tot_scores(
   plot_df, bbsiq_neg_int_tot,
-  "Fig. 5. Neg. Bias (Internal) Over Time for Tx Compl.",
+  "Fig. 3. Neg. Bias (Internal) Over Time for Tx Compl.",
   "Total Score (Neg. BBSIQ Internal)",
   c(0:4)*7, 0*7, 4*7, c(0.8, 0.8)
 )
 
 bbsiq_neg_ext_tot_plot <- plot_tot_scores(
   plot_df, bbsiq_neg_ext_tot,
-  "Fig. 6. Neg. Bias (External) Over Time for Tx Compl.",
+  "Fig. 4. Neg. Bias (External) Over Time for Tx Compl.",
   "Total Score (Neg. BBSIQ External)",
   c(0:4)*7, 0*7, 4*7, c(0.8, 0.8)
 )
 
-rr_neg_threat_tot_plot <- plot_tot_scores(
-  plot_df, rr_neg_threat_tot,
-  "Fig. 7. Neg. Bias (Threat) Over Time for Tx Compl.",
-  "Total Score (Neg. RR Threat)",
-  c(1:4)*9, 1*9, 4*9, c(0.8, 0.2)
-)
-
-rr_neg_nonthreat_tot_plot <- plot_tot_scores(
-  plot_df, rr_neg_nonthreat_tot,
-  "Fig. 8. Neg. Bias (Nonthreat) Over Time for Tx Compl.",
-  "Total Score (Neg. RR Nonthreat)",
-  c(1:4)*9, 1*9, 4*9, c(0.8, 0.8)
-)
+# rr_neg_threat_tot_plot <- plot_tot_scores(
+#   plot_df, rr_neg_threat_tot,
+#   "Fig. 7. Neg. Bias (Threat) Over Time for Tx Compl.",
+#   "Total Score (Neg. RR Threat)",
+#   c(1:4)*9, 1*9, 4*9, c(0.8, 0.2)
+# )
+# 
+# rr_neg_nonthreat_tot_plot <- plot_tot_scores(
+#   plot_df, rr_neg_nonthreat_tot,
+#   "Fig. 8. Neg. Bias (Nonthreat) Over Time for Tx Compl.",
+#   "Total Score (Neg. RR Nonthreat)",
+#   c(1:4)*9, 1*9, 4*9, c(0.8, 0.8)
+# )
 
 # Store plots in list
 
 plots <- list(neuroqol_anx_tot_plot = neuroqol_anx_tot_plot,
-              oa_tot_plot = oa_tot_plot,
-              dass21_as_tot_plot = dass21_as_tot_plot,
+              # oa_tot_plot = oa_tot_plot,
+              # dass21_as_tot_plot = dass21_as_tot_plot,
               bbsiq_neg_int_tot_plot = bbsiq_neg_int_tot_plot,
-              bbsiq_neg_ext_tot_plot = bbsiq_neg_ext_tot_plot,
-              rr_neg_threat_tot_plot = rr_neg_threat_tot_plot,
-              rr_neg_nonthreat_tot_plot = rr_neg_nonthreat_tot_plot)
+              bbsiq_neg_ext_tot_plot = bbsiq_neg_ext_tot_plot)
+              # rr_neg_threat_tot_plot = rr_neg_threat_tot_plot,
+              # rr_neg_nonthreat_tot_plot = rr_neg_nonthreat_tot_plot
 
 # Save plots
 
